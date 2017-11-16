@@ -1,16 +1,15 @@
+import main
 import unittest
 
+class MainTest(unittest.TestCase):
+    """This class uses the Flask tests app to run an integration test against a
+    local instance of the server."""
 
-class TestUM(unittest.TestCase):
     def setUp(self):
-        pass
+        self.app = main.app.test_client()
 
-    def test_numbers_3_4(self):
-        self.assertEqual(3*4, 12)
-
-    def test_strings_a_3(self):
-        self.assertEqual('aa'+'a', 'aaa')
-
+    def test_hello_world(self):
+        assert 1 == 1
 
 if __name__ == '__main__':
     unittest.main()
