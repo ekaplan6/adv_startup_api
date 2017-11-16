@@ -1,87 +1,50 @@
-# Python CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-python/ for more details
-#
-version: 2
-jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.6.1
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/adv_startup_api
-
-    steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
-
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
-
-      # run tests!
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            python main_test.py
-
-      - store_artifacts:
-          path: test-report
-          destination: test-reports
-
-
+# Copyright 2015, Google, Inc.
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+# this file except in compliance with the License. You may obtain a copy of the
+# License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable
+# law or agreed to in writing, software distributed under the License is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+# or implied. See the License for the specific language governing permissions and
+# limitations under the License.
 
 machine:
-environment:
-# Add app engine sdk to pythonpath for local unit tests.
-PYTHONPATH: ${PYTHONPATH}:${HOME}/google_appengine
-# Replace this with your project ID
-GCLOUD_PROJECT: "adv_startup_api"
+  environment:
+    # Add app engine sdk to pythonpath for local unit tests.
+    PYTHONPATH: ${PYTHONPATH}:${HOME}/google_appengine
+
+    # Replace this with your project ID
+    GCLOUD_PROJECT: "adv_startup_api"
+
 dependencies:
-pre:
-# Download App Engine SDK
-# This is not necessary to deploy, its only necessary  to run local tests importing the App Engine SDK
+  pre:
+    # Download App Engine SDK
+    # This is not necessary to deploy, its only necessary  to run local tests importing the App Engine SDK
     - curl -o $HOME/google_appengine_1.9.30.zip https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.30.zip
     - unzip -q -d $HOME $HOME/google_appengine_1.9.30.zip
-# Retrieve our secrets from the CircleCI environment
+    # Retrieve our secrets from the CircleCI environment
     - echo $CLIENT_SECRET | base64 --decode > ${HOME}/client-secret.json
     - sed  s/YOUR-API-KEY/$API_KEY/ api_key.py.sample > api_key.py
-# vendor our dependencies
+    # vendor our dependencies
     - mkdir -p lib
     - pip install -r requirements.txt -t lib
-# Make sure gcloud is up to date
+    # Make sure gcloud is up to date
     - gcloud --quiet components update app
-# authenticate gcloud
+    # authenticate gcloud
     - gcloud auth activate-service-account --key-file ${HOME}/client-secret.json
-# Replace <your-project-id>
+    # Replace <your-project-id>
     - gcloud config set project lively-marking-181419
 
+test:
+  override:
+    # run local unit tests
+    - python main_test.py
+
 deployment:
-staging:
-branch: master
-commands:
-# deploy to AppEngine
+    staging:
+        branch: master
+        commands:
+        # deploy to AppEngine
         - gcloud -q preview app deploy app.yaml --promote --version=1
-# Run our E2E Test
+        # Run our E2E Test
         - python e2e_test.py
