@@ -1,0 +1,14 @@
+# This uses the standard GCP Python runtime.  See https://cloud.google.com/appengine/docs/flexible/python/runtime
+runtime: custom
+
+# This tells GCP that we will be using the 'flex' platform, which allows us to use any language and any code we want
+env: flex
+
+# This tells GCP how to run our app.  GUnicorn is a common python HTTP server library.
+# We simply tell unicorn where to find our WSGI-compatible application - in main.py!
+# The Flask WSGI application is in a variable called 'app'
+entrypoint: gunicorn -b :$PORT main:app
+
+# Python 3 is the future!
+runtime_config:
+  python_version: 3
