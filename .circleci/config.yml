@@ -58,7 +58,7 @@ jobs:
 # or implied. See the License for the specific language governing permissions and
 # limitations under the License.
 
-      machine:
+      - machine:
         environment:
           # Add app engine sdk to pythonpath for local unit tests.
           PYTHONPATH: ${PYTHONPATH}:${HOME}/google_appengine
@@ -66,7 +66,7 @@ jobs:
           # Replace this with your project ID
           GCLOUD_PROJECT: "adv_startup_api"
 
-      dependencies:
+      - dependencies:
         pre:
           # Download App Engine SDK
           # This is not necessary to deploy, its only necessary  to run local tests importing the App Engine SDK
@@ -85,12 +85,12 @@ jobs:
           # Replace <your-project-id>
           - gcloud config set project lively-marking-181419
 
-      test:
+      - test:
         override:
           # run local unit tests
           - python main_test.py
 
-      deployment:
+      - deployment:
           staging:
               branch: master
               commands:
