@@ -1,54 +1,54 @@
-# Python CircleCI 2.0 configuration file
+## Python CircleCI 2.0 configuration file
+##
+## Check https://circleci.com/docs/2.0/language-python/ for more details
+##
+#version: 2
+#jobs:
+#  build:
+#    docker:
+#      # specify the version you desire here
+#      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
+#      - image: circleci/python:3.6.1
 #
-# Check https://circleci.com/docs/2.0/language-python/ for more details
+#      # Specify service dependencies here if necessary
+#      # CircleCI maintains a library of pre-built images
+#      # documented at https://circleci.com/docs/2.0/circleci-images/
+#      # - image: circleci/postgres:9.4
 #
-version: 2
-jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.6.1
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/adv_startup_api
-
-    steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
-
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
-
-      # run tests!
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            python main_test.py
-
-      - store_artifacts:
-          path: test-report
-          destination: test-reports
+#    working_directory: ~/adv_startup_api
+#
+#    steps:
+#      - checkout
+#
+#      # Download and cache dependencies
+#      - restore_cache:
+#          keys:
+#          - v1-dependencies-{{ checksum "requirements.txt" }}
+#          # fallback to using the latest cache if no exact match is found
+#          - v1-dependencies-
+#
+#      - run:
+#          name: install dependencies
+#          command: |
+#            python3 -m venv venv
+#            . venv/bin/activate
+#            pip install -r requirements.txt
+#
+#      - save_cache:
+#          paths:
+#            - ./venv
+#          key: v1-dependencies-{{ checksum "requirements.txt" }}
+#
+#      # run tests!
+#      - run:
+#          name: run tests
+#          command: |
+#            . venv/bin/activate
+#            python main_test.py
+#
+#      - store_artifacts:
+#          path: test-report
+#          destination: test-reports
 
 
 ## Copyright 2015, Google, Inc.
@@ -100,3 +100,42 @@ jobs:
 #        - gcloud -q preview app deploy app.yaml --promote --version=1
 #        # Run our E2E Test
 #        - python e2e_test.py
+
+
+machine:
+  environment:
+    CLOUDSDK_CORE_DISABLE_PROMPTS: 1
+    CLOUDSDK_PYTHON_SITEPACKAGES: 1
+    CLOUDSDK_COMPUTE_ZONE: us-central1-b
+    CLOUDSDK_CORE_PROJECT: $GCLOUD_PROJECTID
+    PATH: $PATH:/home/ubuntu/google-cloud-sdk/bin
+  python:
+    version: 3.6.1
+  services:
+    - docker
+
+dependencies:
+  cache_directories:
+    - ~/google-cloud-sdk
+    - ~/docker
+  override:
+    - script/ensure-gcloud-installed.sh
+    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+    - docker build -t $EXTERNAL_REGISTRY_ENDPOINT/hello:$CIRCLE_SHA1 .
+    - mkdir -p ~/docker; docker save $EXTERNAL_REGISTRY_ENDPOINT/hello:$CIRCLE_SHA1 > ~/docker/image.tar
+
+database:
+  override:
+    - echo
+
+test:
+  override:
+    - docker run -d -p 3000:3000 -e "SECRET_KEY_BASE=foo" $EXTERNAL_REGISTRY_ENDPOINT/hello:$CIRCLE_SHA1
+    - curl --retry 10 --retry-delay 5 -v http://localhost:3000
+
+deployment:
+  prod:
+    branch: master
+    commands:
+      - script/auth-gcloud.sh
+      - gcloud docker push $EXTERNAL_REGISTRY_ENDPOINT/hello > /dev/null
