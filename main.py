@@ -8,6 +8,8 @@ from flask_pymongo import PyMongo
 from werkzeug import security
 from werkzeug.exceptions import BadRequest, NotFound, UnsupportedMediaType, Unauthorized
 from validate_email import validate_email
+import smtplib
+from bson.objectid import ObjectId
 
 from exceptions import JSONExceptionHandler
 
@@ -29,6 +31,7 @@ mongo = PyMongo(app)
 
 @app.route('/', methods=['GET'])
 def who_am_i():
+    #print(mongo.db.users.find_one(ObjectId("5a0a659d46d2e00007fbfb9d")))
     if session.get('user') is None:
         raise Unauthorized()
     return jsonify(session.get('user'))
@@ -282,6 +285,16 @@ def accept():
     existing_job['driver'] = session['user']['_id']['$oid']
 
     res = mongo.db.jobs.insert_one(existing_job)
+
+    smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
+    smtp_server.ehlo()
+    smtp_server.starttls()
+    smtp_server.login('ctcs5357@gmail.com', 'ls cs5357')
+    email = session['user']['email']
+    smtp_server.sendmail('ctcs5357@gmail.com', email,
+                         'Subject: Got Junk Notification!\nYou have accepted a job!')
+    smtp_server.quit()
+
     return Response(str(res.inserted_id), 200)
 
 @app.route('/job/accept/show', methods=['GET'])
