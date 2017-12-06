@@ -1,5 +1,5 @@
 # This uses the standard GCP Python runtime.  See https://cloud.google.com/appengine/docs/flexible/python/runtime
-runtime: custom
+runtime: python
 
 # This tells GCP that we will be using the 'flex' platform, which allows us to use any language and any code we want
 env: flex

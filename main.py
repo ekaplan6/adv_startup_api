@@ -149,8 +149,6 @@ def deleteAccount():
 
 @app.route('/job/show', methods=['GET'])
 def showClientJobs():
-    if not request.is_json:
-        raise UnsupportedMediaType()
     if session.get('user') is None or session.get('user')['type'] == 'driver':
         raise Unauthorized('You must be a client')
 
@@ -253,8 +251,6 @@ def deleteJob():
 
 @app.route('/job/available', methods=['GET'])
 def seeJobs():
-    if not request.is_json:
-        raise UnsupportedMediaType()
     if session.get('user') is None or session.get('user')['type'] == 'client':
         raise Unauthorized('You must be a driver')
 
@@ -290,8 +286,6 @@ def accept():
 
 @app.route('/job/accept/show', methods=['GET'])
 def seeDriverJobs():
-    if not request.is_json:
-        raise UnsupportedMediaType()
     if session.get('user') is None or session.get('user')['type'] == 'client':
         raise Unauthorized('You must be a driver')
 

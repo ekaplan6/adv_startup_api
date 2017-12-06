@@ -8,8 +8,11 @@ class MainTest(unittest.TestCase):
     def setUp(self):
         self.app = main.app.test_client()
 
-    def test_hello_world(self):
-        assert 1 == 1
+    def test1(self):
+        self.assertEqual(1, 1)
+
+    def test2(self):
+        self.assertEqual(2, 2)
 
 if __name__ == '__main__':
     unittest.main()

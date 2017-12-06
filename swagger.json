@@ -1,0 +1,239 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Back end server for React Native App",
+    "version" : "1.0.0",
+    "title" : "Driver and Client Backend",
+    "contact" : {
+      "email" : "emk269@cornell.edu"
+    }
+  },
+  "tags" : [ {
+    "name" : "/",
+    "description" : "Home Page"
+  }, {
+    "name" : "login",
+    "description" : "Login"
+  }, {
+    "name" : "logout",
+    "description" : "Logout of app"
+  }, {
+    "name" : "register",
+    "description" : "Register for app"
+  }, {
+    "name" : "account",
+    "description" : "User account"
+  }, {
+    "name" : "job",
+    "description" : "Jobs Available/Accepted"
+  } ],
+  "paths" : {
+    "/" : {
+      "get" : {
+        "tags" : [ "/" ],
+        "summary" : "Returns all the information about the current user"
+      }
+    },
+    "/login" : {
+      "post" : {
+        "tags" : [ "login" ],
+        "summary" : "Login to the app (cookie is generated)",
+        "parameters" : [ {
+          "name" : "username",
+          "description" : "The username of the account",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "password",
+          "description" : "The password to the account",
+          "required" : true,
+          "type" : "string"
+        } ]
+      }
+    },
+    "/logout" : {
+      "get" : {
+        "tags" : [ "logout" ],
+        "summary" : "Log out of the app (erase all cookies)"
+      }
+    },
+    "/register" : {
+      "post" : {
+        "tags" : [ "register" ],
+        "summary" : "Create a new account (cookie is generated)",
+        "parameters" : [ {
+          "name" : "username",
+          "description" : "The username of the account",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "password",
+          "description" : "The password to the account",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "phone_number",
+          "description" : "User phone number",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "email",
+          "description" : "User email",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "type",
+          "description" : "Either \"Client\" or \"Driver\"",
+          "required" : true,
+          "type" : "string"
+        } ]
+      }
+    },
+    "/account/settings" : {
+      "post" : {
+        "tags" : [ "account" ],
+        "summary" : "Edit account info",
+        "parameters" : [ {
+          "name" : "phone_number",
+          "description" : "The user's new phone number",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "email",
+          "description" : "The user's new email",
+          "required" : false,
+          "type" : "string"
+        } ]
+      }
+    },
+    "/account/delete" : {
+      "get" : {
+        "tags" : [ "account" ],
+        "summary" : "Delete current account you are logged in for"
+      }
+    },
+    "/job/show" : {
+      "get" : {
+        "tags" : [ "job" ],
+        "summary" : "For clients only, Show all the jobs the client has created"
+      }
+    },
+    "/job/create" : {
+      "post" : {
+        "tags" : [ "job" ],
+        "summary" : "For clients only, Create a new job (jobs exist already if they exist from the same user and same location)",
+        "parameters" : [ {
+          "name" : "location",
+          "description" : "location of the job",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "start_time",
+          "description" : "Start time of job",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "finish_time",
+          "description" : "Finish time of job",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "max_price",
+          "description" : "Maximum price of job",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "description",
+          "description" : "Description of job",
+          "required" : true,
+          "type" : "string"
+        } ]
+      }
+    },
+    "/job/edit" : {
+      "post" : {
+        "tags" : [ "job" ],
+        "summary" : "For client only, edit an existing created job (cannot edit location)",
+        "parameters" : [ {
+          "name" : "location",
+          "description" : "location of the job",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "start_time",
+          "description" : "Start time of job",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "finish_time",
+          "description" : "Finish time of job",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "max_price",
+          "description" : "Maximum price of job",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "description",
+          "description" : "Description of job",
+          "required" : false,
+          "type" : "string"
+        } ]
+      }
+    },
+    "/job/delete" : {
+      "post" : {
+        "tags" : [ "job" ],
+        "summary" : "For client only, delete a posted job at a specific location",
+        "parameters" : [ {
+          "name" : "location",
+          "description" : "location of the job",
+          "required" : true,
+          "type" : "string"
+        } ]
+      }
+    },
+    "/job/available" : {
+      "get" : {
+        "tags" : [ "job" ],
+        "summary" : "For driver only, Show all unaccepted positions"
+      }
+    },
+    "/job/accept" : {
+      "post" : {
+        "tags" : [ "job" ],
+        "summary" : "For driver only, Accept a job, and become a driver for that job location",
+        "parameters" : [ {
+          "name" : "client",
+          "description" : "the client’s user ID that posted the job",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "location",
+          "description" : "location of the job",
+          "required" : true,
+          "type" : "string"
+        } ]
+      }
+    },
+    "/job/accept/show" : {
+      "get" : {
+        "tags" : [ "job" ],
+        "summary" : "For driver only, show all accepted jobs"
+      }
+    },
+    "/job/cancel" : {
+      "post" : {
+        "tags" : [ "job" ],
+        "summary" : "For driver only, cancel being the driver for a particular job",
+        "parameters" : [ {
+          "name" : "location",
+          "description" : "location of the job",
+          "required" : true,
+          "type" : "string"
+        } ]
+      }
+    }
+  }
+}
