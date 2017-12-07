@@ -25,7 +25,7 @@ app.config['MONGO_DBNAME'] = 'adv_startup_sys'
 app.config['MONGO_URI'] = 'mongodb://jobs:jobs@ds147421.mlab.com:47421/adv_startup_sys'
 app.secret_key = 'secret'
 
-# This initializes PyMongo and makes `mongo` available
+# This initializes PyMongo and makes `mongo` availabl
 mongo = PyMongo(app)
 
 
