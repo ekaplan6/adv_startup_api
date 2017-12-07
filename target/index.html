@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <title>Driver and Client Backend</title>
+                                                         </head>
+<body>
+<div class="container">
+    <h1>Driver and Client Backend</h1>
+    <p class="sw-info">
+        
+        Version: <span class="sw-info-version">1.0.0</span>
+    </p>
+    <p><p>Back end server for React Native App</p>
+    </p>
+    
+    
+    <div id="sw-schemes" class="sw-default-value">
+        <span class="sw-default-value-header">Schemes:</span>
+        
+    </div>
+    
+        
+        <h2 id="swagger--summary-tags">Summary</h2>
+            <h3 id="tag--" class="swagger-summary-tag">Tag: /</h3>
+            <p>Home Page</p>
+        
+            <p class="sw-tag-external-doc">
+            </p>
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation---get">GET /</a></td>
+                        <td><p>Returns all the information about the current user</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-login" class="swagger-summary-tag">Tag: login</h3>
+            <p>Login</p>
+        
+            <p class="sw-tag-external-doc">
+            </p>
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--login-post">POST /login</a></td>
+                        <td><p>Login to the app (cookie is generated)</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-logout" class="swagger-summary-tag">Tag: logout</h3>
+            <p>Logout of app</p>
+        
+            <p class="sw-tag-external-doc">
+            </p>
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--logout-get">GET /logout</a></td>
+                        <td><p>Log out of the app (erase all cookies)</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-register" class="swagger-summary-tag">Tag: register</h3>
+            <p>Register for app</p>
+        
+            <p class="sw-tag-external-doc">
+            </p>
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--register-post">POST /register</a></td>
+                        <td><p>Create a new account (cookie is generated)</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-account" class="swagger-summary-tag">Tag: account</h3>
+            <p>User account</p>
+        
+            <p class="sw-tag-external-doc">
+            </p>
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--account-settings-post">POST /account/settings</a></td>
+                        <td><p>Edit account info</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--account-delete-get">GET /account/delete</a></td>
+                        <td><p>Delete current account you are logged in for</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-job" class="swagger-summary-tag">Tag: job</h3>
+            <p>Jobs Available/Accepted</p>
+        
+            <p class="sw-tag-external-doc">
+            </p>
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--job-show-get">GET /job/show</a></td>
+                        <td><p>For clients only, Show all the jobs the client has created</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--job-create-post">POST /job/create</a></td>
+                        <td><p>For clients only, Create a new job (jobs exist already if they exist from the same user and same location)</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--job-edit-post">POST /job/edit</a></td>
+                        <td><p>For client only, edit an existing created job (cannot edit location)</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--job-delete-post">POST /job/delete</a></td>
+                        <td><p>For client only, delete a posted job at a specific location</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--job-available-get">GET /job/available</a></td>
+                        <td><p>For driver only, Show all unaccepted positions</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--job-accept-post">POST /job/accept</a></td>
+                        <td><p>For driver only, Accept a job, and become a driver for that job location</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--job-accept-show-get">GET /job/accept/show</a></td>
+                        <td><p>For driver only, show all accepted jobs</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--job-cancel-post">POST /job/cancel</a></td>
+                        <td><p>For driver only, cancel being the driver for a particular job</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+        
+    
+    
+    
+    <h2>Paths</h2>
+    
+        
+        <span id="path--"></span>
+            <div id="operation---get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns all the information about the current user</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/</strong></h3>
+                        Tags:
+                            <a href="#tag--">/</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                    
+                </div>
+            </div>
+        
+        <span id="path--account-delete"></span>
+            <div id="operation--account-delete-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Delete current account you are logged in for</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/account/delete</strong></h3>
+                        Tags:
+                            <a href="#tag-account">account</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                    
+                </div>
+            </div>
+        
+        <span id="path--account-settings"></span>
+            <div id="operation--account-settings-post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Edit account info</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/account/settings</strong></h3>
+                        Tags:
+                            <a href="#tag-account">account</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                phone_number
+                                            </td>
+                                            <td><p>The user&#39;s new phone number</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                email
+                                            </td>
+                                            <td><p>The user&#39;s new email</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                </div>
+            </div>
+        
+        <span id="path--job-accept"></span>
+            <div id="operation--job-accept-post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">For driver only, Accept a job, and become a driver for that job location</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/job/accept</strong></h3>
+                        Tags:
+                            <a href="#tag-job">job</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                client
+                                            </td>
+                                            <td><p>the client’s user ID that posted the job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                location
+                                            </td>
+                                            <td><p>location of the job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                </div>
+            </div>
+        
+        <span id="path--job-accept-show"></span>
+            <div id="operation--job-accept-show-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">For driver only, show all accepted jobs</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/job/accept/show</strong></h3>
+                        Tags:
+                            <a href="#tag-job">job</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                    
+                </div>
+            </div>
+        
+        <span id="path--job-available"></span>
+            <div id="operation--job-available-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">For driver only, Show all unaccepted positions</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/job/available</strong></h3>
+                        Tags:
+                            <a href="#tag-job">job</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                    
+                </div>
+            </div>
+        
+        <span id="path--job-cancel"></span>
+            <div id="operation--job-cancel-post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">For driver only, cancel being the driver for a particular job</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/job/cancel</strong></h3>
+                        Tags:
+                            <a href="#tag-job">job</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                location
+                                            </td>
+                                            <td><p>location of the job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                </div>
+            </div>
+        
+        <span id="path--job-create"></span>
+            <div id="operation--job-create-post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">For clients only, Create a new job (jobs exist already if they exist from the same user and same location)</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/job/create</strong></h3>
+                        Tags:
+                            <a href="#tag-job">job</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                location
+                                            </td>
+                                            <td><p>location of the job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                start_time
+                                            </td>
+                                            <td><p>Start time of job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                finish_time
+                                            </td>
+                                            <td><p>Finish time of job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                max_price
+                                            </td>
+                                            <td><p>Maximum price of job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                description
+                                            </td>
+                                            <td><p>Description of job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                </div>
+            </div>
+        
+        <span id="path--job-delete"></span>
+            <div id="operation--job-delete-post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">For client only, delete a posted job at a specific location</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/job/delete</strong></h3>
+                        Tags:
+                            <a href="#tag-job">job</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                location
+                                            </td>
+                                            <td><p>location of the job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                </div>
+            </div>
+        
+        <span id="path--job-edit"></span>
+            <div id="operation--job-edit-post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">For client only, edit an existing created job (cannot edit location)</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/job/edit</strong></h3>
+                        Tags:
+                            <a href="#tag-job">job</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                location
+                                            </td>
+                                            <td><p>location of the job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                start_time
+                                            </td>
+                                            <td><p>Start time of job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                finish_time
+                                            </td>
+                                            <td><p>Finish time of job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                max_price
+                                            </td>
+                                            <td><p>Maximum price of job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                description
+                                            </td>
+                                            <td><p>Description of job</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                </div>
+            </div>
+        
+        <span id="path--job-show"></span>
+            <div id="operation--job-show-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">For clients only, Show all the jobs the client has created</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/job/show</strong></h3>
+                        Tags:
+                            <a href="#tag-job">job</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                    
+                </div>
+            </div>
+        
+        <span id="path--login"></span>
+            <div id="operation--login-post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Login to the app (cookie is generated)</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/login</strong></h3>
+                        Tags:
+                            <a href="#tag-login">login</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                username
+                                            </td>
+                                            <td><p>The username of the account</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                password
+                                            </td>
+                                            <td><p>The password to the account</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                </div>
+            </div>
+        
+        <span id="path--logout"></span>
+            <div id="operation--logout-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Log out of the app (erase all cookies)</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/logout</strong></h3>
+                        Tags:
+                            <a href="#tag-logout">logout</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                    
+                </div>
+            </div>
+        
+        <span id="path--register"></span>
+            <div id="operation--register-post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Create a new account (cookie is generated)</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/register</strong></h3>
+                        Tags:
+                            <a href="#tag-register">register</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                username
+                                            </td>
+                                            <td><p>The username of the account</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                password
+                                            </td>
+                                            <td><p>The password to the account</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                phone_number
+                                            </td>
+                                            <td><p>User phone number</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                email
+                                            </td>
+                                            <td><p>User email</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                type
+                                            </td>
+                                            <td><p>Either &quot;Client&quot; or &quot;Driver&quot;</p>
+                                        </td>
+                                            <td></td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                </div>
+            </div>
+    
+     
+    
+                       
+    
+</div>
+<script src="bundle.js" type="application/javascript"></script>
+</body>
+</html>
