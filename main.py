@@ -9,7 +9,7 @@ from werkzeug import security
 from werkzeug.exceptions import BadRequest, NotFound, UnsupportedMediaType, Unauthorized
 from validate_email import validate_email
 import smtplib
-from bson.objectid import ObjectId
+#from bson.objectid import ObjectId
 
 from exceptions import JSONExceptionHandler
 

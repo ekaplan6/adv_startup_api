@@ -87,7 +87,7 @@ dependencies:
 test:
   override:
     # run local unit tests
-    - python main_test.py
+    - python test.py
 
 deployment:
     staging:
