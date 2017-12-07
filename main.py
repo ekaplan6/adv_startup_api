@@ -16,7 +16,7 @@ import smtplib
 # This defines a Flask application
 app = Flask(__name__)
 
-# This code here converts Flask's default (HTML) errors to Json errors.
+# This code here converts Flask's default (HTML) errors to Json errors
 # This is helpful because HTML breaks clients that are expecting JSON
 #JSONExceptionHandler(app)
 
