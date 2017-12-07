@@ -11,14 +11,14 @@ from validate_email import validate_email
 import smtplib
 #from bson.objectid import ObjectId
 
-from exceptions import JSONExceptionHandler
+#from exceptions import JSONExceptionHandler
 
 # This defines a Flask application
 app = Flask(__name__)
 
 # This code here converts Flask's default (HTML) errors to Json errors.
 # This is helpful because HTML breaks clients that are expecting JSON
-JSONExceptionHandler(app)
+#JSONExceptionHandler(app)
 
 # We configure the app object
 app.config['MONGO_DBNAME'] = 'adv_startup_sys'
@@ -329,29 +329,6 @@ def cancelJob():
     existing_job['driver'] = 'None'
     res = mongo.db.jobs.insert_one(existing_job)
     return Response(str(res.inserted_id), 200)
-
-# @app.route('/mail')
-# def send_email():
-#     # Import smtplib for the actual sending function
-#     import smtplib
-#
-#     # Import the email modules we'll need
-#     from email.mime.text import MIMEText
-#
-#     # me == the sender's email address
-#     # you == the recipient's email address
-#     msg = MIMEText('this is my message')
-#     msg['Subject'] = 'The subject'
-#     msg['From'] = 'a@b.com'
-#     msg['To'] = 'b@c.com'
-#
-#     # Send the message via our own SMTP server, but don't include the
-#     # envelope header.
-#     s = smtplib.SMTP(host='smtp.lively-marking-181419.appspot.com', port=1025)
-#     s.sendmail('a@b.com', [], msg.as_string())
-#     s.quit()
-#
-#     return 'Sent the mail'
 
 
 # This allows you to run locally.
