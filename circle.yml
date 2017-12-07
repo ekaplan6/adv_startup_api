@@ -84,10 +84,10 @@ dependencies:
     # Replace <your-project-id>
     - gcloud config set project lively-marking-181419
 
-#test:
-#  override:
-#    # run local unit tests
-#    - python main_test.py
+test:
+  override:
+    # run local unit tests
+    - python main_test.py
 
 deployment:
     staging:
